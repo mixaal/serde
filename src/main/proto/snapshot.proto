@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package tutorial;
+
+option java_multiple_files = true;
+option java_package = "net.mikc.serde.protos";
+option java_outer_classname = "SnapshotProtoEntity";
+
+import "project.proto";
+
+message SnapshotProtoBufs {
+  repeated Project projects = 1;
+}

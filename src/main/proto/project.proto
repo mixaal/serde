@@ -1,0 +1,35 @@
+syntax = "proto2";
+
+package tutorial;
+
+option java_multiple_files = true;
+option java_package = "net.mikc.serde.protos";
+option java_outer_classname = "ProjectProtoEntity";
+
+message Project {
+  enum State {
+    ACCEPTED = 0;
+    IN_PROGRESS = 1;
+    DELETED = 2;
+    DELETING = 3;
+  }
+
+  required State state = 1;
+
+  required int64 sequenceId = 2;
+  required int32 maxQueryOcpu = 3;
+  required int32 maxQueryTime = 4;
+  required int32 maxConcurrentQueries = 5;
+  required int32 maxQueryRead = 6;
+
+
+  required string compartmentId = 7;
+  required string databaseId = 8;
+  required string projectId = 9;
+  required string version = 10;
+  required string eventId = 11;
+  required string secretId = 12;
+  required string opcRequestId = 13;
+
+  repeated string logs = 14;
+}
