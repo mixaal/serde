@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import net.mikc.serializers.SerializeBytes;
 
 import java.util.List;
 
@@ -15,22 +16,36 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 public class ProjectMetadataEntity {
+    @SerializeBytes(id=1)
     private String version;
+    @SerializeBytes(id=2)
     private String eventId;
+    @SerializeBytes(id=3)
     private String opcRequestId;
+    @SerializeBytes(id=4)
     private Long sequenceId;
+    @SerializeBytes(id=5)
     private String projectId;
+    @SerializeBytes(id=6)
     private String compartmentId;
+    @SerializeBytes(id=7, isEnum=true)
     private ProjectState state;
 
+    @SerializeBytes(id=8)
     private Integer maxConcurrentQueries;
+    @SerializeBytes(id=9)
     private Integer maxQueryTime;
+    @SerializeBytes(id=10)
     private Integer maxQueryOcpu;
+    @SerializeBytes(id=11)
     private Integer maxQueryRead;
 
+    @SerializeBytes(id=12)
     private String databaseId;
+    @SerializeBytes(id=13)
     private String secretId;
 
+    @SerializeBytes(id=14)
     private List<String> logs;
 
     @JsonPOJOBuilder(withPrefix = "")

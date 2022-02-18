@@ -80,11 +80,18 @@ public class TestHelper {
 
     public static boolean assertEquals(Object o1, Object o2) {
         if (o1 == null || o2 == null) return false;
+        if(!o1.equals(o2)) {
+            System.out.println(o1.toString());
+            System.out.println(o2.toString());
+        }
         return o1.equals(o2);
     }
 
 
     public static void assertTrue(String name, boolean value) {
         System.out.println("Test " + name + ": " + (value ? "PASSED" : "FAILED"));
+        if(!value) {
+            System.exit(-1);
+        }
     }
 }

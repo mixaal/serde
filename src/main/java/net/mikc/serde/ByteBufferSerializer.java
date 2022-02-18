@@ -1,5 +1,7 @@
 package net.mikc.serde;
 
+import com.google.common.io.ByteArrayDataOutput;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

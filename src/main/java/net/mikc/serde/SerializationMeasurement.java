@@ -3,6 +3,7 @@ package net.mikc.serde;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.mikc.serde.entities.ProjectMetadataEntity;
+import net.mikc.serde.entities.ProjectMetadataEntitySerializer;
 import net.mikc.serde.entities.ProjectState;
 import net.mikc.serde.entities.Snapshot;
 import net.mikc.serde.protos.*;
@@ -58,14 +59,16 @@ public class SerializationMeasurement {
     }
 
     private byte[] byteBufferSerialize(ProjectMetadataEntity entity) {
-        ObjectsToBytes strings = ByteBufferSerializer.convertToBytes(
-                entity.getMaxConcurrentQueries(), entity.getMaxQueryOcpu(), entity.getMaxQueryRead(), entity.getMaxQueryTime(), entity.getSequenceId(), entity.getState().getValue(),
-                entity.getCompartmentId(), entity.getDatabaseId(), entity.getEventId(), entity.getOpcRequestId(), entity.getProjectId(), entity.getSecretId(), entity.getVersion(),
-                entity.getLogs()
-        );
-        ByteBuffer bb = ByteBuffer.allocate(strings.getTotalLen());
-        strings.appendToByteBuffer(bb);
-        return bb.array();
+//        ObjectsToBytes strings = ByteBufferSerializer.convertToBytes(
+//                entity.getMaxConcurrentQueries(), entity.getMaxQueryOcpu(), entity.getMaxQueryRead(), entity.getMaxQueryTime(), entity.getSequenceId(), entity.getState().getValue(),
+//                entity.getCompartmentId(), entity.getDatabaseId(), entity.getEventId(), entity.getOpcRequestId(), entity.getProjectId(), entity.getSecretId(), entity.getVersion(),
+//                entity.getLogs()
+//        );
+//        ByteBuffer bb = ByteBuffer.allocate(strings.getTotalLen());
+//        strings.appendToByteBuffer(bb);
+//        return bb.array();
+
+        return ProjectMetadataEntitySerializer.serialize(entity);
     }
 
     private byte[] byteBufferSerialize2(ByteBufferSerializer bbs, ProjectMetadataEntity entity) {
@@ -107,28 +110,29 @@ public class SerializationMeasurement {
     }
 
     public ProjectMetadataEntity byteBufferDeserialize(byte[] bytes) {
-        ByteBuffer bb = ByteBuffer.wrap(bytes);
-        ProjectMetadataEntity.Builder entityBuilder = ProjectMetadataEntity.builder()
-                .maxConcurrentQueries(bb.getInt())
-                .maxQueryOcpu(bb.getInt())
-                .maxQueryRead(bb.getInt())
-                .maxQueryTime(bb.getInt())
-                .sequenceId(bb.getLong())
-                .state(ProjectState.fromValue(bb.getInt()))
-                .compartmentId(ByteBufferSerializer.readString(bb))
-                .databaseId(ByteBufferSerializer.readString(bb))
-                .eventId(ByteBufferSerializer.readString(bb))
-                .opcRequestId(ByteBufferSerializer.readString(bb))
-                .projectId(ByteBufferSerializer.readString(bb))
-                .secretId(ByteBufferSerializer.readString(bb))
-                .version(ByteBufferSerializer.readString(bb));
-
-        int sz = bb.getInt();
-        List<String> logs = new ArrayList<>();
-        for (int i = 0; i < sz; i++) {
-            logs.add(ByteBufferSerializer.readString(bb));
-        }
-        return entityBuilder.logs(logs).build();
+//        ByteBuffer bb = ByteBuffer.wrap(bytes);
+//        ProjectMetadataEntity.Builder entityBuilder = ProjectMetadataEntity.builder()
+//                .maxConcurrentQueries(bb.getInt())
+//                .maxQueryOcpu(bb.getInt())
+//                .maxQueryRead(bb.getInt())
+//                .maxQueryTime(bb.getInt())
+//                .sequenceId(bb.getLong())
+//                .state(ProjectState.fromValue(bb.getInt()))
+//                .compartmentId(ByteBufferSerializer.readString(bb))
+//                .databaseId(ByteBufferSerializer.readString(bb))
+//                .eventId(ByteBufferSerializer.readString(bb))
+//                .opcRequestId(ByteBufferSerializer.readString(bb))
+//                .projectId(ByteBufferSerializer.readString(bb))
+//                .secretId(ByteBufferSerializer.readString(bb))
+//                .version(ByteBufferSerializer.readString(bb));
+//
+//        int sz = bb.getInt();
+//        List<String> logs = new ArrayList<>();
+//        for (int i = 0; i < sz; i++) {
+//            logs.add(ByteBufferSerializer.readString(bb));
+//        }
+//        return entityBuilder.logs(logs).build();
+        return ProjectMetadataEntitySerializer.deserialize(bytes);
     }
 
 
